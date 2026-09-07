@@ -1312,7 +1312,12 @@ function sbValidateUrl(url) {
 }
 function sbInit() {
   var cfg = sbConfig();
-  if (!cfg || !cfg.url || !cfg.key) { sbClient = null; return; }
+  // 默认配置：硬编码后所有设备打开网址自动配置，无需手动填写
+  var DEFAULT_URL = 'https://xrzihqbfvujvnbzdrroc.supabase.co';
+  var DEFAULT_KEY = 'sb_publishable_YTBGzsElILQH_YFyth3KqQ_ABa5ON--';
+  if (!cfg || !cfg.url || !cfg.key) {
+    cfg = { url: DEFAULT_URL, key: DEFAULT_KEY };
+  }
   var urlErr = sbValidateUrl(cfg.url);
   if (urlErr) { sbClient = null; return; }
   try {
