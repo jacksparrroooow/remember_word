@@ -1,0 +1,28 @@
+{
+  "name": "词忆 · 艾宾浩斯背单词",
+  "short_name": "词忆",
+  "description": "基于艾宾浩斯遗忘曲线的背单词应用，支持六级/雅思/托福词汇，云端多设备同步",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f6f4ee",
+  "theme_color": "#0e7c6b",
+  "lang": "zh-CN",
+  "dir": "ltr",
+  "categories": ["education", "productivity"],
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

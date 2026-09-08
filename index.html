@@ -2,8 +2,18 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>词忆 · 艾宾浩斯背单词助手</title>
+<!-- PWA -->
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#0e7c6b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="词忆">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png">
 <style>
 /* ============ 设计令牌 ============ */
 :root {
@@ -617,6 +627,45 @@ select {
   .done-stats { grid-template-columns: repeat(2, 1fr); }
   .rate-row { gap: 8px; }
 }
+/* 底部导航（手机端） */
+#bottomNav { display: none; }
+@media (max-width: 768px) {
+  #bottomNav {
+    display: flex;
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 5px 0 calc(5px + env(safe-area-inset-bottom));
+    z-index: 100;
+  }
+  .bn-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 5px 2px;
+    color: var(--ink-3);
+    text-decoration: none;
+    font-size: 11px;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .bn-item.active { color: var(--primary); font-weight: 600; }
+  .bn-item .ic svg { width: 22px; height: 22px; }
+  #views { padding-bottom: 76px; }
+  /* 学习卡片手机端优化 */
+  .flash-card { padding: 20px 16px 24px; margin: 0; }
+  .flash-word { font-size: 32px; }
+  .pre-rate-row { gap: 10px; }
+  .pre-rate-row .btn { min-height: 56px; font-size: 16px; }
+  .rate-row .btn { min-height: 52px; font-size: 15px; }
+  .btn-lg { min-height: 52px; }
+  .icon-btn { min-width: 40px; min-height: 40px; }
+  /* 顶部栏手机端 */
+  #topbar { padding: 10px 14px; }
+  #topbar h2 { font-size: 17px; }
+}
 .account-chip { font-size: 12px; color: var(--ink-2); margin-top: 6px; display: flex; align-items: center; gap: 6px; }
 .account-chip .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ink-3); }
 .account-chip.online .dot { background: var(--green); }
@@ -679,6 +728,13 @@ select {
       <section id="view-settings" class="view"></section>
       <section id="view-auth" class="view"></section>
     </div>
+    <nav id="bottomNav">
+      <a class="bn-item" data-route="today" href="#/today"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M10 21v-6h4v6"/></svg></span><span>今日</span></a>
+      <a class="bn-item" data-route="learn" href="#/learn"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg></span><span>学习</span></a>
+      <a class="bn-item" data-route="books" href="#/books"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span><span>词书</span></a>
+      <a class="bn-item" data-route="stats" href="#/stats"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg></span><span>统计</span></a>
+      <a class="bn-item" data-route="settings" href="#/settings"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span><span>设置</span></a>
+    </nav>
   </main>
 </div>
 <div id="detailModal" class="modal-layer" hidden></div>
@@ -2826,6 +2882,9 @@ function render() {
   $$('.nav-item').forEach(function (a) {
     a.classList.toggle('active', a.dataset.route === route);
   });
+  $$('.bn-item').forEach(function (a) {
+    a.classList.toggle('active', a.dataset.route === route);
+  });
   if (route === 'today') renderToday();
   else if (route === 'learn') renderLearn();
   else if (route === 'books') renderBooks();
@@ -2880,6 +2939,14 @@ function init() {
   }
   // 初始化 Supabase
   sbInit();
+  // 注册 Service Worker（PWA 离线支持）
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('/sw.js').catch(function () {
+        // 本地 file:// 协议下无法注册 SW，忽略
+      });
+    });
+  }
   $('#hamburger').onclick = toggleSidebar;
   $('#mask').onclick = closeSidebar;
   window.addEventListener('hashchange', render);
